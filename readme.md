@@ -1,4 +1,7 @@
-l誕生日から経過した日付を出力するSlack Botです。
+誕生日から経過した日付を出力するSlack Botです。
+Slack公式のBotkitを利用します。
+Botkitは[こちら](https://github.com/howdyai/botkit)からダウンロードしてください。
+
 
 # 使い方
 bot.js を編集します。
@@ -7,13 +10,14 @@ bot.js を編集します。
 controller.hears(['help'], 'ambient', function(bot, message) {
     var ary = [];
     ary.unshift('受付コマンド一覧：');
+    // yournameを設定したいコマンド名に置換
     ary.unshift(' yourname : 生年月日と生まれてから経過した時間を出力します');
     for(var i = ary.length; i--; ) {
         bot.reply(message, ary[i]);
     }
 });
 
-
+// yournameを設定したいコマンド名に置換
 controller.hears(['yourname'], 'ambient', function(bot, message) {
     // 生年月日を設定
     var my_birth = "2015/1/1 9:00:00";
@@ -22,12 +26,12 @@ controller.hears(['yourname'], 'ambient', function(bot, message) {
 
     // calcBirth.jsを読み込む
     var f = require('./calcBirth.js');
-    // インスタンス作成
-    var me = new f.calcBirth(my_birth);
+    // calcBirthのインスタンス作成
+    var cb = new f.calcBirth(my_birth);
     // 指定された日時時点の情報を出力する場合は第2引数を指定します
-    //var me = new f.calcBirth(my_birth, t_date);
+    //var cb = new f.calcBirth(my_birth, t_date);
     
-    // 戻り値は配列に格納されています
+    // 戻り値は配列に格納されます
     var ary_mess = me.printAge();
     for(var i = 0; i < ary_mess.length; i++) {
         bot.reply(message, ary_mess[i]);
